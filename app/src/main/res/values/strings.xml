@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Space</string>
+    <string name="title_news">Новости</string>
+    <string name="title_payment">Оплата</string>
+    <string name="title_user">Аккаунт</string>
+    <string name="label_news">label news</string>
+    <string name="date_news">date news</string>
+    <string name="text_news">text news</string>
+    <string name="payment_name_service">name service</string>
+    <string name="payment_summa">0.00</string>
+</resources>
