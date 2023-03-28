@@ -2,7 +2,7 @@ package com.example.space.ui.news
 
 import androidx.lifecycle.ViewModel
 import com.example.space.data.News
-import com.example.space.domain.NewsRepositoryImpl
+import com.example.space.data.NewsRepositoryImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
