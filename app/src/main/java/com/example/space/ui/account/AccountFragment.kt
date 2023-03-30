@@ -8,16 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.space.databinding.FragmentAccountBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class AccountFragment : Fragment() {
 
     private var _binding: FragmentAccountBinding? = null
+    private val auth = Firebase.auth
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -29,7 +33,7 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         val accountViewModel =
-            ViewModelProvider(this).get(AccountViewModel::class.java)
+            ViewModelProvider(this)[AccountViewModel::class.java]
 
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -46,6 +50,7 @@ class AccountFragment : Fragment() {
         //observeAuthenticationState()
 
         binding.authButton.setOnClickListener { launchSignInFlow() }
+        binding.logoutButton.setOnClickListener { logout() }
     }
 
     private fun launchSignInFlow() {
@@ -71,7 +76,11 @@ class AccountFragment : Fragment() {
                     TAG,
                     "Successfully signed in user ${FirebaseAuth.getInstance().currentUser?.displayName}"
                 )
+                _binding!!.authButton.visibility = View.INVISIBLE
+                _binding!!.logoutButton.visibility = View.VISIBLE
             } else {
+                _binding!!.authButton.visibility = View.VISIBLE
+                _binding!!.logoutButton.visibility = View.INVISIBLE
                 Log.i(TAG, "Sign in unsuccessful ${response?.error?.errorCode}")
             }
         }
@@ -85,5 +94,9 @@ class AccountFragment : Fragment() {
     companion object {
         const val SIGN_IN_REQUEST_CODE = 1001
         const val TAG = "AccountFragment"
+    }
+
+    private fun logout() {
+        auth.signOut()
     }
 }

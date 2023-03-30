@@ -8,4 +8,5 @@
     <string name="text_news">text news</string>
     <string name="payment_name_service">name service</string>
     <string name="payment_summa">0.00</string>
+    <string name="logout_button">Log out</string>
 </resources>
