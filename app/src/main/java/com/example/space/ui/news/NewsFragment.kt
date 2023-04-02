@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.space.data.NewsService
 import com.example.space.databinding.FragmentNewsBinding
-import kotlinx.coroutines.flow.onEach
 
 class NewsFragment : Fragment() {
 
@@ -34,11 +30,20 @@ class NewsFragment : Fragment() {
         val manager = LinearLayoutManager(this.context)
         val adapter = NewsAdapter()
 
-        lifecycleScope.launchWhenStarted {
-            newsViewModel.news.collect {news->
-                adapter.data = news
+/*        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                newsViewModel.news.collect { news ->
+                    adapter.data = news
+                    Log.i("NewsFragment", news.toString())
+                    Log.i("NewsFragment", newsViewModel.news.value.toString())
+                }
             }
+        }*/
+        newsViewModel.newsLiveData.observe(viewLifecycleOwner) { listNews ->
+            adapter.data = listNews
         }
+
+
 
         binding.listNews.layoutManager = manager
         binding.listNews.adapter = adapter

@@ -3,8 +3,9 @@ package com.example.space.ui.news
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.space.data.News
+import com.example.space.data.model.News
 import com.example.space.databinding.ItemNewsBinding
+import com.example.space.domain.Convert
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
@@ -30,7 +31,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
         with(holder.binding) {
             labelNews.text = news.label
-            dateNews.text = news.date
+            dateNews.text = Convert.convertLongToDate(news.date)
             textNews.text = news.text
 
         }
