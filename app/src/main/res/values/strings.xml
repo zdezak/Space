@@ -9,4 +9,7 @@
     <string name="payment_name_service">name service</string>
     <string name="payment_summa">0.00</string>
     <string name="logout_button">Log out</string>
+    <string name="summa_label">К оплате</string>
+    <string name="pay_button">Оплатить</string>
+    <string name="summa_payment">0.00</string>
 </resources>
