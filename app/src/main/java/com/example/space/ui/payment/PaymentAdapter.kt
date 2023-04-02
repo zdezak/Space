@@ -3,7 +3,7 @@ package com.example.space.ui.payment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.space.data.Payment
+import com.example.space.data.model.Payment
 import com.example.space.databinding.ItemPaymentBinding
 
 class PaymentAdapter : RecyclerView.Adapter<PaymentAdapter.PaymentViewHolder>() {

@@ -1,4 +1,4 @@
-package com.example.space.data
+package com.example.space.data.model
 
 data class Payment(
     val nameService:String,

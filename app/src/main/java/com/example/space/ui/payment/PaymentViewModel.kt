@@ -1,8 +1,8 @@
 package com.example.space.ui.payment
 
 import androidx.lifecycle.ViewModel
-import com.example.space.data.Payment
-import com.example.space.data.PaymentRepositoryImpl
+import com.example.space.data.model.Payment
+import com.example.space.data.repository.PaymentRepositoryImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
