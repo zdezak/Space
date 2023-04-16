@@ -7,8 +7,9 @@ import com.example.space.data.model.News
 import com.example.space.domain.convertNewsToMap
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 
 class NewsRepositoryImpl : NewsRepository {
 
@@ -16,58 +17,21 @@ class NewsRepositoryImpl : NewsRepository {
         const val TAG = "Repository"
     }
 
-    private val newsDefault = mutableListOf(
-        News(
-            "Отключение воды 20.03.2023",
-            LocalDateTime.now().atZone(ZoneOffset.UTC).toEpochSecond(),
-            "Плановое отключение 20.03.2023 г."
-        ),
-        News(
-            "Плановое отключение электричествоа 21.03.2023",
-            LocalDateTime.now().atZone(ZoneOffset.UTC).toEpochSecond(),
-            "Плановое отключение электричествоа 21.03.2023 г."
-        ),
-        News(
-            "Отключение воды 22.03.2023",
-            LocalDateTime.now().atZone(ZoneOffset.UTC).toEpochSecond(),
-            "Плановое отключение 22.03.2023 г."
-        ),
-        News(
-            "Плановое отключение электричествоа 23.03.2023",
-            LocalDateTime.now().atZone(ZoneOffset.UTC).toEpochSecond(),
-            "Плановое отключение электричествоа 23.03.2023 г."
-        ),
-        News(
-            "Отключение воды 24.03.2023",
-            LocalDateTime.now().atZone(ZoneOffset.UTC).toEpochSecond(),
-            "Плановое отключение 24.03.2023 г."
-        ),
-        News(
-            "Плановое отключение электричествоа 30.03.2023",
-            LocalDateTime.now().atZone(ZoneOffset.UTC).toEpochSecond(),
-            "Плановое отключение электричествоа 30.03.2023 г."
-        ),
-        News(
-            "Плановое отключение электричествоа 31.03.2023",
-            LocalDateTime.now().atZone(ZoneOffset.UTC).toEpochSecond(),
-            "Плановое отключение электричествоа 31.03.2023 г."
-        )
-    )
     private val db = Firebase.firestore
 
-    override suspend fun getNews(): List<News> {
+    override suspend fun getNews(): List<News> = withContext(Dispatchers.IO) {
         val news: MutableList<News> = mutableListOf()
         db.collection(NameTables.News.name)
             .get()
             .addOnSuccessListener { documentSnapshot ->
                 for (doc in documentSnapshot) {
-                    news.add(convert(doc.data))
+                    news.add(convert(doc.id, doc.data))
                 }
             }
             .addOnFailureListener { e ->
                 Log.i(TAG, "error $e")
             }
-        return news
+        return@withContext news
     }
 
     override suspend fun setNews(newsList: List<News>) {
@@ -84,8 +48,9 @@ class NewsRepositoryImpl : NewsRepository {
     }
 
     //Map<String, Any?>.convert()
-    private fun convert(map: MutableMap<String, Any>): News {
+    private fun convert(id: String, map: MutableMap<String, Any>): News {
         return News(
+            id,
             map[KeysMap.LABEL.name] as String,
             map[KeysMap.DATE.name] as Long,
             map[KeysMap.TEXT.name] as String
