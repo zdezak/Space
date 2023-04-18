@@ -5,13 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.space.databinding.FragmentNewsBinding
-import kotlinx.coroutines.launch
 
 class NewsFragment : Fragment() {
 
@@ -34,12 +30,16 @@ class NewsFragment : Fragment() {
         val manager = LinearLayoutManager(this.context)
         val adapter = NewsAdapter(emptyList())
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                newsViewModel.news.collect {
-                    adapter.data =  it
-                }
-            }
+//                 viewLifecycleOwner.lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                newsViewModel.news.collect {
+//                    adapter.data =  it
+//                }
+//            }
+//        }
+
+        newsViewModel.news.observe(viewLifecycleOwner) {
+            adapter.data = it
         }
 
 
