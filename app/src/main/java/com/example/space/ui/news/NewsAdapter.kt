@@ -9,8 +9,13 @@ import com.example.space.data.model.News
 import com.example.space.databinding.ItemNewsBinding
 import com.example.space.domain.Convert
 
-class NewsAdapter(var data: List<News>) :
+class NewsAdapter(data: List<News>) :
     ListAdapter<News, NewsAdapter.NewsViewHolder>(NewsDiffCallback) {
+    var data: List<News> = data
+        set(newValue) {
+            field = newValue
+            notifyDataSetChanged()
+        }
     class NewsViewHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun getItemCount() = data.size

@@ -30,13 +30,14 @@ class NewsFragment : Fragment() {
         val manager = LinearLayoutManager(this.context)
         val adapter = NewsAdapter(emptyList())
 
-//                 viewLifecycleOwner.lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                newsViewModel.news.collect {
-//                    adapter.data =  it
-//                }
-//            }
-//        }
+        /*        viewLifecycleOwner.lifecycleScope.launch {
+                    repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        newsViewModel.news.collect {
+                            adapter.data = it
+                        }
+                    }
+                }*/
+
 
         newsViewModel.news.observe(viewLifecycleOwner) {
             adapter.data = it
